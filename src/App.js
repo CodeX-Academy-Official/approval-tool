@@ -1,6 +1,6 @@
 import React from "react";
-import Navbar from "./Navbar";
-import ListStudents from "./ListStudents";
+import Navbar from "./components/Navbar";
+import ListStudents from "./components/ListStudents";
 
 function App() {
   return (
@@ -8,7 +8,7 @@ function App() {
       <header>
         <Navbar />
       </header>
-      <main style={{ backgroundColor: "#E0E0E0" }}>
+      <main>
         <ListStudents />
       </main>
     </>

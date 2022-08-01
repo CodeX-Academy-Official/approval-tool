@@ -1,6 +1,7 @@
 import React from "react";
+import { Outlet } from "react-router-dom";
 import Navbar from "./components/Navbar";
-import ListStudents from "./components/ListStudents";
+// import ListStudents from "./components/ListStudents";
 
 function App() {
   return (
@@ -9,7 +10,8 @@ function App() {
         <Navbar />
       </header>
       <main>
-        <ListStudents />
+        {/* <ListStudents /> */}
+        <Outlet />
       </main>
     </>
   );

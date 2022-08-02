@@ -81,6 +81,8 @@ function ListStudents() {
                           <StudentItem
                             key={student["Contact ID"]}
                             studentItem={student}
+                            students={students}
+                            setStudents={setStudents}
                           />
                         );
                       })

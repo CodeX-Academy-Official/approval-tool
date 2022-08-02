@@ -2,9 +2,10 @@ import React from "react";
 import { formatDistance } from "date-fns";
 import confetti from "canvas-confetti";
 
-function StudentItem({ studentItem }) {
+function StudentItem({ studentItem, setStudents }) {
   const contactID = studentItem["Contact ID"];
   const approval = studentItem["Approval"];
+  const isPending = !approval || approval === "Pending" ? true : false;
   const lastActivity = formatDistance(
     new Date(studentItem["Last Activity Date"]),
     new Date(),
@@ -22,13 +23,19 @@ function StudentItem({ studentItem }) {
       .then(() => {
         console.log("Approved successfully.");
         confetti({
-          particleCount: 100,
+          particleCount: 150,
           spread: 70,
           origin: { y: 0.6 },
         });
-        setTimeout(() => {
-          window.location.reload();
-        }, 3000);
+        setStudents((prevStudents) => {
+          const updatedStudent = { ...studentItem, Approval: "Approved" };
+          const indexToUpdate = prevStudents.findIndex(
+            (e) => e["Contact ID"] === contactID
+          );
+          const newStudents = [...prevStudents];
+          newStudents.splice(indexToUpdate, 1, updatedStudent);
+          return newStudents;
+        });
       })
       .catch((error) => console.error(error));
   };
@@ -41,7 +48,8 @@ function StudentItem({ studentItem }) {
         <button
           onClick={() => handleApprove()}
           className="btn btn-primary"
-          disabled={approval !== "Pending" ? true : false}
+          hidden={isPending ? false : true}
+          disabled={isPending ? false : true}
         >
           Approve
         </button>

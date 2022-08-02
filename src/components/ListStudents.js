@@ -9,6 +9,24 @@ function ListStudents() {
 
   let [searchParams] = useSearchParams();
 
+  const getStudentsBackground = () => {
+    const token = searchParams.get("token");
+    if (token) {
+      const url = `https://eo54v3d2m8phjma.m.pipedream.net/?token=${token}`;
+      fetch(url)
+        .then((response) => response.json())
+        .then((data) => {
+          if (data && data.length && data[0]) {
+            setStudents(() => data);
+            setPropertyNames(() => Object.getOwnPropertyNames(data[0]));
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+  };
+
   useEffect(() => {
     const token = searchParams.get("token");
     if (token) {
@@ -18,7 +36,7 @@ function ListStudents() {
         .then((data) => {
           setIsLoading(false);
           if (data && data.length && data[0]) {
-            setStudents(() => data);
+            setStudents(() => [...data]);
             setPropertyNames(() => Object.getOwnPropertyNames(data[0]));
           }
         })
@@ -81,8 +99,8 @@ function ListStudents() {
                           <StudentItem
                             key={student["Contact ID"]}
                             studentItem={student}
-                            students={students}
                             setStudents={setStudents}
+                            getStudentsBackground={getStudentsBackground}
                           />
                         );
                       })

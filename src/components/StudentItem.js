@@ -2,7 +2,7 @@ import React from "react";
 import { formatDistance } from "date-fns";
 import confetti from "canvas-confetti";
 
-function StudentItem({ studentItem, setStudents }) {
+function StudentItem({ studentItem, setStudents, getStudentsBackground }) {
   const contactID = studentItem["Contact ID"];
   const approval = studentItem["Approval"];
   const isPending = !approval || approval === "Pending" ? true : false;
@@ -36,6 +36,7 @@ function StudentItem({ studentItem, setStudents }) {
           newStudents.splice(indexToUpdate, 1, updatedStudent);
           return newStudents;
         });
+        getStudentsBackground();
       })
       .catch((error) => console.error(error));
   };
